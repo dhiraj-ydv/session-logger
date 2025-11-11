@@ -10,22 +10,19 @@
 
 ## 📖 Overview
 
-**Stopwatch App** is a lightweight, modern desktop stopwatch built using **Python**, **HTML/CSS**, and **PyWebView**.  
-It’s a perfect example of combining a **web-based frontend** with a **Python backend** to create a **native desktop experience** —  
-without needing Electron, .NET, or C++.
+**Stopwatch App** is a lightweight, modern desktop stopwatch combining a **web-based frontend (HTML/CSS/JS)** with a **Python backend** using **PyWebView**. It offers a native desktop experience without complex frameworks.
 
 ---
 
 ## ✨ Features
 
-✅ Start, Stop, and Reset stopwatch functionality  
-✅ Pause and Resume — continues the same session (no duplicate entries)  
-✅ Session history saved locally as JSON  
-✅ Persistent data (your sessions stay saved even after restart)  
-✅ Status indicator for **Running ⏱**, **Paused ⏸**, and **Saved 💾** states  
-✅ Scrollable session history panel  
-✅ Clean Windows 11–style Fluent UI look  
-✅ 100% Python + HTML/CSS — no external JS frameworks required  
+✅ **Single Control Button:** Start and Stop the stopwatch with one intuitive button.
+✅ **Automatic Session Saving:** Sessions are automatically saved to a user-selected JSON file when stopped.
+✅ **Customizable Data Storage:** Choose where to save session data on the local file system.
+✅ **Persistent Data:** Sessions are saved and loaded automatically from the last used database.
+✅ **Session History Window:** View all saved sessions in a dedicated popup window.
+✅ **Resizable Window:** The application window can be resized and maximized.
+✅ **Clean UI:** Modern, clean interface with Fluent Design aesthetics.
 
 ---
 
@@ -34,13 +31,14 @@ without needing Electron, .NET, or C++.
 ```
 stopwatch-app/
 │
-├── main.py                # Python backend (logic, persistence)
-├── data/
-│   └── sessions.json      # Auto-created file for saved sessions
+├── main.py                # Python backend (logic, persistence, API)
+├── config.json            # Stores the path to the last used session database
 └── web/
-    ├── index.html         # Frontend UI
-    ├── style.css          # Styling (Fluent look)
-    └── script.js          # JS logic for UI and PyWebView bridge
+    ├── index.html         # Main application UI
+    ├── style.css          # Styling for main UI and session window
+    ├── script.js          # JS logic for main UI and PyWebView bridge
+    ├── sessions.html      # UI for the session history popup window
+    └── sessions.js        # JS logic for the session history popup
 ```
 
 ---
@@ -56,16 +54,11 @@ Install dependencies:
 pip install pywebview
 ```
 
-*(Optional for packaging as EXE)*  
-```bash
-pip install pyinstaller
-```
-
 ---
 
 ## 🚀 How to Run the App
 
-### 1️⃣ Clone this repository
+### 1️⃣ Clone the repository
 ```bash
 git clone https://github.com/dhiraj-ydv/stopwatch-app.git
 cd stopwatch-app
@@ -87,96 +80,33 @@ A native window will open — no browser required.
 
 ## 🖥️ How to Use
 
-| Action | Description |
-|--------|--------------|
-| ▶️ **Start** | Starts or resumes the stopwatch |
-| ⏸️ **Stop** | Pauses the stopwatch |
-| 🔁 **Reset** | Stops and saves the current session |
-| 🕒 **History** | Displays your saved sessions |
-
-🧠 **Note:**  
-- Stopping does *not* create a new session — it only pauses.  
-- Pressing **Reset** saves the session permanently in `data/sessions.json`.  
+1.  **Start/Stop:** Click the main button to start the stopwatch. Click it again to stop.
+2.  **Create New Database:** Use the "Create DB" button in the top toolbar to select a location and name for a new session database (`.json` file).
+3.  **Open Existing Database:** Use the "Open DB" button in the top toolbar to load an existing session database.
+4.  **View Session History:** Click the "Sessions History" button in the footer to open a new window displaying all recorded sessions.
+5.  **Current DB Path:** The path to the currently active session database is displayed in the footer.
 
 ---
 
 ## 💾 Data Storage
 
-Your stopwatch sessions are saved automatically to:
-```
-data/sessions.json
-```
-
-Example data:
-```json
-[
-  {
-    "start": "2025-11-11T14:12:31.182433",
-    "end": "2025-11-11T14:15:02.726530",
-    "duration": 151.54
-  },
-  {
-    "start": "2025-11-11T15:22:31.182433",
-    "end": "2025-11-11T15:23:05.726530",
-    "duration": 34.54
-  }
-]
-```
+Stopwatch sessions are saved automatically to the selected or created `.json` file. The path to this file is remembered in `config.json`.
 
 ---
 
 ## 🎨 User Interface
 
-### 💻 Live Interface Preview
-
-```
-+-------------------------------------------+
-|                ⏱ Stopwatch                |
-|                                           |
-|                   0.00                    |
-|  [Start] [Stop] [Reset] [History]         |
-|                                           |
-|  🟢 Running / 🟠 Paused / 💾 Saved         |
-|-------------------------------------------|
-|  🕒 History                               |
-|  14:12:31 → 151.54s                       |
-|  15:22:31 → 34.54s                        |
-+-------------------------------------------+
-```
-
 ### 🪟 Fluent Design Feel
-- White rounded container  
-- Subtle shadows  
-- Windows 11 accent blue (`#0078d7`)  
-- Smooth animations on hover and buttons  
+- Clean, modern layout with a responsive design.
+- White rounded container with subtle shadows.
+- Windows 11 accent blue (`#0078d7`) for primary elements.
+- Smooth animations on hover and buttons.
 
 ---
 
 ## 🧠 How It Works
 
-**Architecture Diagram:**
-
-```
-┌──────────────────────────┐
-│        Frontend          │
-│ ──────────────────────── │
-│ HTML / CSS / JavaScript  │
-│ └── rendered in PyWebView│
-└──────────▲───────────────┘
-           │
-           │ (bridge API)
-           ▼
-┌──────────────────────────┐
-│         Backend           │
-│ ───────────────────────── │
-│ Python (main.py)          │
-│ Stopwatch logic + storage │
-│ JSON file for sessions    │
-└───────────────────────────┘
-```
-
-**PyWebView** acts as a native app shell — it displays your web UI and directly connects  
-your JavaScript (`script.js`) to Python methods via the `window.pywebview.api` bridge.
+**PyWebView** acts as a native app shell, displaying the web UI and connecting JavaScript to Python methods via the `window.pywebview.api` bridge. The Python backend handles all core logic, data persistence, and native OS interactions (like file dialogs and creating new windows).
 
 ---
 
@@ -185,11 +115,11 @@ your JavaScript (`script.js`) to Python methods via the `window.pywebview.api` b
 To create a `.exe` for Windows:
 
 ```bash
+pip install pyinstaller
 pyinstaller --onefile main.py
 ```
 
-Your app will be packaged into `/dist/Stopwatch.exe`  
-and can run on any Windows machine without Python installed.
+The app will be packaged into `/dist/Stopwatch.exe` and can run on any Windows machine without a Python installation.
 
 ---
 
@@ -206,11 +136,11 @@ and can run on any Windows machine without Python installed.
 
 ## 🧑‍💻 Author
 
-**[Dhiraj Yadav](https://github.com/dhiraj-ydv**  
+**[Dhiraj Yadav](https://github.com/dhiraj-ydv)**  
 🌐 GitHub: [@dhiraj-ydv](https://github.com/dhiraj-ydv)  
 📧 Contact: hello@dhiarjhq.com  
 
-If you like this project, please ⭐ **star the repo** — it helps others discover it!
+If this project is helpful, please ⭐ **star the repo** — it helps others discover it!
 
 ---
 
@@ -222,5 +152,5 @@ MIT License © 2025 Dhiraj Yadav
 
 ---
 
-⭐ **If this project helped you, don’t forget to give it a Star!**  
-> Happy Coding — and enjoy your clean, modern Python stopwatch! 🕒
+⭐ **If this project is helpful, don’t forget to give it a Star!**  
+> Happy Coding! 🕒
