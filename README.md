@@ -3,7 +3,6 @@
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 [![PyWebView](https://img.shields.io/badge/UI-PyWebView-0078d7.svg)](https://pywebview.flowrl.com/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)]()
 
 ---
@@ -138,14 +137,6 @@ The app will be packaged into `/dist/Stopwatch.exe` and can run on any Windows m
 📧 Contact: hello@dhiarjhq.com  
 
 If this project is helpful, please ⭐ **star the repo** — it helps others discover it!
-
----
-
-## 📜 License
-
-```
-MIT License © 2025 Dhiraj Yadav
-```
 
 ---
 
