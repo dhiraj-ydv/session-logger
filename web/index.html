@@ -7,13 +7,23 @@
 </head>
 <body>
   <div class="container">
-    <h1 id="time">0.00</h1>
+    <h1>⏱ Stopwatch</h1>
+    <div id="time" class="time-display">0.00</div>
+
     <div class="buttons">
       <button onclick="start()">Start</button>
       <button onclick="stop()">Stop</button>
       <button onclick="reset()">Reset</button>
+      <button onclick="showHistory()">History</button>
     </div>
+
+    <!-- status display -->
+    <div id="status" class="status"></div>
+
+    <!-- session history -->
+    <div id="history" class="history"></div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>

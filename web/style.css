@@ -1,36 +1,117 @@
+/* ----- General Layout ----- */
 body {
-  font-family: sans-serif;
-  background: #f4f4f4;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: linear-gradient(135deg, #e6f0ff, #f9fbff);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  margin: 0;
 }
 
+/* ----- Container ----- */
 .container {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 16px;
   text-align: center;
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  width: 320px;
+  transition: transform 0.2s ease;
 }
 
+.container:hover {
+  transform: translateY(-2px);
+}
+
+/* ----- Title and Timer ----- */
 h1 {
+  font-size: 1.5em;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.time-display {
   font-size: 3em;
-  margin-bottom: 20px;
+  font-weight: bold;
+  margin: 10px 0 20px;
+  color: #0078d7;
+  user-select: none;
+}
+
+/* ----- Buttons ----- */
+.buttons {
+  margin-bottom: 12px;
 }
 
 button {
   background: #0078d7;
   color: white;
   border: none;
-  padding: 10px 20px;
-  margin: 0 5px;
+  padding: 10px 15px;
+  margin: 5px;
   font-size: 1em;
   border-radius: 6px;
   cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  min-width: 70px;
 }
 
 button:hover {
   background: #005fa3;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* ----- Status Indicator ----- */
+.status {
+  margin-top: 8px;
+  font-weight: bold;
+  height: 24px; /* fixed height prevents layout jumping */
+  line-height: 24px;
+  font-size: 0.95em;
+  transition: color 0.2s ease;
+}
+
+/* ----- History Section ----- */
+.history {
+  margin-top: 18px;
+  text-align: left;
+  font-size: 0.9em;
+  max-height: 160px;
+  overflow-y: auto;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+
+.history h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #0078d7;
+  font-weight: 600;
+}
+
+.history p {
+  margin: 4px 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 3px;
+  color: #333;
+}
+
+/* ----- Scrollbar for Windows look ----- */
+.history::-webkit-scrollbar {
+  width: 6px;
+}
+
+.history::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.history::-webkit-scrollbar-thumb:hover {
+  background-color: #999;
 }
