@@ -1,49 +1,62 @@
 let timerInterval = null;
 
+window.addEventListener('pywebviewready', () => {
+  updateFileDisplay();
+});
+
 async function updateTime() {
   const time = await window.pywebview.api.get_time();
   document.getElementById('time').innerText = time.toFixed(2);
 }
 
-// --- Button handlers ---
-async function start() {
-  const status = await window.pywebview.api.start();
-  if (!timerInterval) {
-    timerInterval = setInterval(updateTime, 100);
+async function toggleStopwatch() {
+  const status = await window.pywebview.api.toggle_stopwatch();
+  const toggleBtn = document.getElementById('toggle-btn');
+
+  if (status === 'running') {
+    toggleBtn.innerText = 'Stop';
+    toggleBtn.classList.add('running');
+    if (!timerInterval) {
+      timerInterval = setInterval(updateTime, 100);
+    }
+  } else { // 'stopped'
+    toggleBtn.innerText = 'Start';
+    toggleBtn.classList.remove('running');
+    clearInterval(timerInterval);
+    timerInterval = null;
+    document.getElementById('time').innerText = '0.00';
   }
   updateStatus(status);
 }
 
-async function stop() {
-  const status = await window.pywebview.api.stop();
-  clearInterval(timerInterval);
-  timerInterval = null;
-  updateStatus(status);
+async function openDb() {
+    const filePath = await window.pywebview.api.open_db();
+    if (filePath) {
+        await updateFileDisplay();
+    }
 }
 
-async function reset() {
-  const status = await window.pywebview.api.reset();
-  document.getElementById('time').innerText = '0.00';
-  clearInterval(timerInterval);
-  timerInterval = null;
-  updateStatus(status);
-  await showHistory();
+async function createDb() {
+    const filePath = await window.pywebview.api.create_db();
+    if (filePath) {
+        await updateFileDisplay();
+    }
 }
 
-// --- History display ---
-async function showHistory() {
-  const sessions = await window.pywebview.api.get_sessions();
-  const container = document.getElementById('history');
-
-  if (sessions.length === 0) {
-    container.innerHTML = "<h3>No sessions yet</h3>";
-    return;
+async function updateFileDisplay() {
+  const filePath = await window.pywebview.api.get_current_data_file();
+  const fileDisplayEl = document.getElementById('file-display');
+  if (filePath) {
+    fileDisplayEl.innerText = filePath;
+    fileDisplayEl.title = filePath;
+  } else {
+    fileDisplayEl.innerText = 'No DB Selected';
+    fileDisplayEl.title = 'Create or open a database from the toolbar above.';
   }
+}
 
-  container.innerHTML = "<h3>History</h3>" +
-    sessions.map(s => `
-      <p>🕒 ${s.start.slice(11,19)} → ${s.duration}s</p>
-    `).join('');
+async function showSessionsHistory() {
+  await window.pywebview.api.show_sessions_window();
 }
 
 // --- Status indicator ---

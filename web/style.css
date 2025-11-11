@@ -16,12 +16,74 @@ body {
   border-radius: 16px;
   text-align: center;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  width: 320px;
   transition: transform 0.2s ease;
+  margin-bottom: 60px; /* Space for footer */
 }
 
 .container:hover {
   transform: translateY(-2px);
+}
+
+/* ----- Toolbar ----- */
+.toolbar {
+  text-align: right;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.toolbar button {
+  font-size: 0.8em;
+  padding: 5px 10px;
+  background: #f0f0f0;
+  color: #333;
+}
+
+.toolbar button:hover {
+  background: #e0e0e0;
+}
+
+/* ----- Hidden class ----- */
+.hidden {
+  display: none;
+}
+
+/* ----- Footer ----- */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85em;
+}
+
+#file-display {
+  color: #6c757d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+#sessions-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+#sessions-btn:hover {
+  background-color: #5a6268;
 }
 
 /* ----- Title and Timer ----- */
@@ -63,6 +125,16 @@ button:hover {
 
 button:active {
   transform: scale(0.97);
+}
+
+#toggle-btn {
+  font-size: 1.1em;
+  padding: 12px 20px;
+  background-color: #28a745; /* Green for Start */
+}
+
+#toggle-btn.running {
+  background-color: #dc3545; /* Red for Stop */
 }
 
 /* ----- Status Indicator ----- */

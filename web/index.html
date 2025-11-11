@@ -7,23 +7,27 @@
 </head>
 <body>
   <div class="container">
+    <div class="toolbar">
+      <button onclick="createDb()">Create DB</button>
+      <button onclick="openDb()">Open DB</button>
+    </div>
     <h1>⏱ Stopwatch</h1>
     <div id="time" class="time-display">0.00</div>
 
     <div class="buttons">
-      <button onclick="start()">Start</button>
-      <button onclick="stop()">Stop</button>
-      <button onclick="reset()">Reset</button>
-      <button onclick="showHistory()">History</button>
+      <button id="toggle-btn" onclick="toggleStopwatch()">Start</button>
     </div>
 
     <!-- status display -->
     <div id="status" class="status"></div>
+  </div>
 
-    <!-- session history -->
-    <div id="history" class="history"></div>
+  <div class="footer">
+    <div id="file-display" title="Current database file">No DB Selected</div>
+    <button id="sessions-btn" onclick="showSessionsHistory()">Sessions History</button>
   </div>
 
   <script src="script.js"></script>
+  <script src="sessions.js"></script>
 </body>
 </html>
