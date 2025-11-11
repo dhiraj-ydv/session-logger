@@ -52,7 +52,9 @@ class StopwatchAPI:
             else:
                 self.data_file = file_path
             self.sessions = []
-            self.save_session() # Create the file with empty sessions
+            # Create the file with an empty list of sessions
+            with open(self.data_file, 'w') as f:
+                json.dump([], f)
             self.save_config()
             return self.data_file
         return None

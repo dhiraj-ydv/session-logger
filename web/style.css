@@ -34,7 +34,7 @@ body {
   padding: 10px 15px;
   border-bottom: 1px solid #dee2e6;
   display: flex;
-  justify-content: flex-end; /* Align buttons to the right */
+  justify-content: flex-start; /* Align buttons to the left */
   align-items: center;
   z-index: 1000;
 }
